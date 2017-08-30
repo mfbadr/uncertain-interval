@@ -13,8 +13,10 @@ export default class RandomTimerApp extends React.Component {
 		return (
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<View style={styles.container}>
-					<Text style={styles.headline}>RandomTimer</Text>
+					<Text style={styles.headline}>Uncertain Interval</Text>
 					<RandomTimer/>
+					<Text>contact info will go here</Text>
+
 				</View>
 			</TouchableWithoutFeedback>
 		);
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff',
 		alignItems: 'center',
+		justifyContent: 'space-between'
 	},
 	headline: {
 		textAlign: 'center',
