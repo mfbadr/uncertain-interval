@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Alert, StyleSheet, Text, View, Image, Picker, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import RandomTimer from './app/components/RandomTimer/RandomTimer.js'
+import RandomTimer from './app/components/RandomTimer/RandomTimer.js';
+import commonStyles from './app/config/common_styles.js'
 /***
 TODO:
  - AccessibiltyLabels
@@ -26,12 +27,13 @@ export default class RandomTimerApp extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: commonStyles.colors.altBackgroundColor,
 		alignItems: 'center',
 		justifyContent: 'space-between'
 	},
 	headline: {
 		textAlign: 'center',
+		color: '#FFF',
 		marginTop: 30,
 		fontSize: 30,
 	},
