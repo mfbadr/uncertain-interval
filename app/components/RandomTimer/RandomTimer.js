@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Button, Alert} from 'react-native';
 import styles from './styles.js';
-import TimerButton from './../TimerButton.js';
+import TimerButton from './../TimerButton/TimerButton.js';
 
 export default class RandomTimer extends React.Component {
 	constructor(props) {
@@ -10,8 +10,8 @@ export default class RandomTimer extends React.Component {
 		//stopped -> running -> paused -> running -> finished -> stopped
 		//                        ^> stopped
 		this.state = {
-			minTime: 0,
-			maxTime: 6000,
+			minTime: 5,
+			maxTime: 10000,
 			randomTime: 0,
 			timeLeft: 0,
 			status: 'stopped'
@@ -46,19 +46,19 @@ export default class RandomTimer extends React.Component {
 		var statusDescriptionText;
 		const minTimeMinutes = String(this.state.minTime / 60000);
 		const maxTimeMinutes = String(this.state.maxTime / 60000);
-		const randomTimeMinutes = String(this.state.maxTime / 60000);
+		const randomTimeMinutes = String(this.state.randomTime / 60000);
 		switch(this.state.status){
 			case 'stopped':
  				statusDescriptionText = 'Select a minumum and maxiumum time'
 				break;
 			case 'running':
- 				statusDescriptionText = 'Timer running for between ' + minTimeMinutes + 'minutes and' + maxTimeMinutes + ' minutes.';
+ 				statusDescriptionText = 'Timer running for between ' + minTimeMinutes + ' minutes and ' + maxTimeMinutes + ' minutes.';
 				break;
 			case 'paused':
  				statusDescriptionText = 'Timer paused';
 				break;
 			case 'finished':
- 				statusDescriptionText = 'Timer finished! Time elapsed: ' + randomTimeMinutes;
+ 				statusDescriptionText = 'Timer finished! Time elapsed: ' + randomTimeMinutes + ' minutes';
 				break;
 			default:
 				Alert.alert('err', 'err');
@@ -68,6 +68,13 @@ export default class RandomTimer extends React.Component {
 	}
 
 	onPressPrimaryButton(){
+    if(!this.state.minTime && !this.state.maxTime){
+      Alert.alert('Error', 'Pick a minumum and maxiumum time');
+      return;
+    } else if (this.state.minTime > this.state.maxTime){
+      Alert.alert('Error', 'Max time must be more than min time');
+      return;
+    }
 		switch(this.state.status){
 			case 'stopped':
 				let newInterval = Math.floor(Math.random() * (this.state.maxTime - this.state.minTime)) + this.state.minTime;
@@ -81,10 +88,10 @@ export default class RandomTimer extends React.Component {
 				this.setState({status: 'paused'});
 				break;
 			case 'paused':
-				this.setState({status: 'stopped'});
+				this.setState({status: 'running'});
 				break;
 			case 'finished':
-				this.setState({status: 'running'});
+				this.setState({status: 'stopped'});
 				break;
 			default:
 				Alert.alert('err', 'err');
@@ -94,25 +101,29 @@ export default class RandomTimer extends React.Component {
 	render () {
 		return (
 			<View style={styles.timerView} >
-				<Text>{this.statusDescription()}</Text>
-				<View style={styles.inputWrapper}></View>
-				<TextInput
-					style={styles.textInput}
-					keyboardType ='decimal-pad'
-					onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: true})}
-					value = {String(this.state.minTime/ 60000)}
-				/>
-				<TextInput
-					style={styles.textInput}
-					keyboardType ='decimal-pad'
-					onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: false})}
-					value = {String(this.state.maxTime / 60000)}
-				/>
-				<Text>{this.state.minTime} - {this.state.maxTime}</Text>
+				<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
+				<View style={styles.inputWrapper}>
+  				<TextInput
+  					style={styles.textInput}
+  					keyboardType ='decimal-pad'
+  					onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: true})}
+  				/>
+  				<TextInput
+  					style={styles.textInput}
+  					keyboardType ='decimal-pad'
+  					onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: false})}
+  				/>
+        </View>
 				<TimerButton
 					onButtonPress={this.onPressPrimaryButton.bind(this)}
 					timerState = {this.state.status}
 				/>
+        <TimerButton
+          onButtonPress={this.onPressPrimaryButton.bind(this)}
+          timerState = {this.state.status}
+          isSecondaryButton
+        />
+        <Text>{this.state.minTime} - {this.state.maxTime}</Text>
 				<Text>{this.state.timeLeft}</Text>
 			</View>
 		)
