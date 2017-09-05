@@ -16,7 +16,7 @@ export default class RandomTimerApp extends React.Component {
 				<View style={styles.container}>
 					<Text style={styles.headline}>Uncertain Interval</Text>
 					<RandomTimer/>
-					<Text>contact info will go here</Text>
+					<Text style={styles.footer}>contact info will go here</Text>
 
 				</View>
 			</TouchableWithoutFeedback>
@@ -34,11 +34,15 @@ const styles = StyleSheet.create({
 	headline: {
 		textAlign: 'center',
 		color: '#FFF',
-		marginTop: 30,
-		fontSize: 30,
+		marginTop: 50,
+		fontSize: 34,
 	},
 	text: {
 		color: 'blue',
 		fontSize: 30,
+	},
+	footer: {
+		color: '#FFF'
 	}
+
 });
