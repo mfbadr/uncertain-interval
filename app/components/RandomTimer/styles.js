@@ -1,15 +1,6 @@
 import commonStyles from './../../config/common_styles.js'
 
 const styles = {
-  textInput: {
-    borderColor: commonStyles.colors.secondaryButtonColor,
-    backgroundColor: commonStyles.colors.primaryButtonColor,
-    borderWidth: 3,
-    borderRadius: 4,
-    textAlign: 'center',
-    width: 50,
-    height: 50,
-  },
   statusDescription: {
     color: '#FFF',
     fontSize: 26,
@@ -25,9 +16,11 @@ const styles = {
     padding: '5%'
   },
   inputWrapper: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
+    height: '50%'
     // padding: '20%'
   },
   buttonWrapper: {

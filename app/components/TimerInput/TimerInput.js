@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TextInput } from 'react-native';
 import styles from './styles.js';
+import prettyPrintTime from './../../lib/prettyPrintTime.js';
 
 export default class TimerButton extends React.Component {
   constructor(props) {
@@ -12,13 +13,10 @@ export default class TimerButton extends React.Component {
     return (
       <View>
         <TextInput
-          style={styles.textInput}
+          style={styles.timeInput}
           keyboardType ='decimal-pad'
           onBlur = {this.props.onBlur}
         />
-        <Text>
-          {this.props.value}
-        </Text>
       </View>
     )
   }
@@ -26,7 +24,7 @@ export default class TimerButton extends React.Component {
   renderRunning(){
     return (
       <Text>
-        {this.props.value}
+        {prettyPrintTime(this.props.value)}
       </Text>
     )
   }
@@ -37,6 +35,7 @@ export default class TimerButton extends React.Component {
         return this.renderStopped();
         break;
       case 'paused':
+        return this.renderRunning();
         break;
       case 'running':
         return this.renderRunning();
