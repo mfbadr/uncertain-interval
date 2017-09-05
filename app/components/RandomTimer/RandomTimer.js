@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert} from 'react-native';
 import styles from './styles.js';
 import TimerButton from './../TimerButton/TimerButton.js';
 import TimerInput from './../TimerInput/TimerInput.js';
+import prettyPrintTime from './../../lib/prettyPrintTime.js';
 
 export default class RandomTimer extends React.Component {
 	constructor(props) {
@@ -43,33 +44,16 @@ export default class RandomTimer extends React.Component {
 		}
 	}
 
-  prettyPrintTime(millisec) {
-    var seconds = (millisec / 1000).toFixed(0);
-    var minutes = Math.floor(seconds / 60);
-    var hours = "";
-    if (minutes > 59) {
-        hours = Math.floor(minutes / 60);
-        hours = (hours >= 10) ? hours : "0" + hours;
-        minutes = minutes - (hours * 60);
-        minutes = (minutes >= 10) ? minutes : "0" + minutes;
-    }
 
-    seconds = Math.floor(seconds % 60);
-    seconds = (seconds >= 10) ? seconds : "0" + seconds;
-    if (hours != "") {
-        return hours + ":" + minutes + ":" + seconds;
-    }
-    return minutes + ":" + seconds;
-  }
 
 	statusDescription(){
 		var statusDescriptionText;
 		// const minTimeMinutes = String(this.state.minTime / 60000);
-		const minTimeMinutes = this.prettyPrintTime(this.state.minTime);
+		const minTimeMinutes = prettyPrintTime(this.state.minTime);
 		// const maxTimeMinutes = String(this.state.maxTime / 60000);
-		const maxTimeMinutes = this.prettyPrintTime(this.state.maxTime);
+		const maxTimeMinutes = prettyPrintTime(this.state.maxTime);
 		// const randomTimeMinutes = String(this.state.randomTime / 60000);
-		const randomTimeMinutes = this.prettyPrintTime(this.state.randomTime);
+		const randomTimeMinutes = prettyPrintTime(this.state.randomTime);
 		switch(this.state.status){
 			case 'stopped':
 				statusDescriptionText = 'Start a time for between';
@@ -126,21 +110,21 @@ export default class RandomTimer extends React.Component {
 			<View style={styles.timerView} >
 				<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
 				<View style={styles.inputWrapper}>
-					<TimerInput 
+					<TimerInput
 						onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: true})}
 						value = {this.state.minTime}
 						timerState = {this.state.status}
 					/>
 					<Text> and </Text>
-
-					<TextInput
-						style={styles.textInput}
-						keyboardType ='decimal-pad'
+					<TimerInput
 						onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: false})}
+						value = {this.state.maxTime}
+						timerState = {this.state.status}
 					/>
 				</View>
 				<View style={styles.buttonWrapper}>
 					<TimerButton
+						timerState = {this.state.status}
 						onButtonPress={this.onPressPrimaryButton.bind(this)}
 					/>
 				</View>
