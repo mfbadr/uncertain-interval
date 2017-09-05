@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, Button, Alert} from 'react-native';
 import styles from './styles.js';
 import TimerButton from './../TimerButton/TimerButton.js';
+import TimerInput from './../TimerInput/TimerInput.js';
 
 export default class RandomTimer extends React.Component {
 	constructor(props) {
@@ -71,13 +72,13 @@ export default class RandomTimer extends React.Component {
 		const randomTimeMinutes = this.prettyPrintTime(this.state.randomTime);
 		switch(this.state.status){
 			case 'stopped':
-				statusDescriptionText = 'Select a minumum and maxiumum time'
+				statusDescriptionText = 'Start a time for between';
 				break;
 			case 'running':
-				statusDescriptionText = 'Timer running for between ' + minTimeMinutes + ' and ' + maxTimeMinutes + '.';
+				statusDescriptionText = 'Timer running for between ';
 				break;
 			case 'paused':
-				statusDescriptionText = 'Timer paused';
+				statusDescriptionText = 'Timer paused between:';
 				break;
 			case 'finished':
 				statusDescriptionText = 'Timer finished! Time elapsed: ' + randomTimeMinutes + '.';
@@ -125,12 +126,13 @@ export default class RandomTimer extends React.Component {
 			<View style={styles.timerView} >
 				<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
 				<View style={styles.inputWrapper}>
-
-					<TextInput
-						style={styles.textInput}
-						keyboardType ='decimal-pad'
+					<TimerInput 
 						onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: true})}
+						value = {this.state.minTime}
+						timerState = {this.state.status}
 					/>
+					<Text> and </Text>
+
 					<TextInput
 						style={styles.textInput}
 						keyboardType ='decimal-pad'
@@ -140,7 +142,6 @@ export default class RandomTimer extends React.Component {
 				<View style={styles.buttonWrapper}>
 					<TimerButton
 						onButtonPress={this.onPressPrimaryButton.bind(this)}
-						timerState = {this.state.status}
 					/>
 				</View>
 					<TimerButton
