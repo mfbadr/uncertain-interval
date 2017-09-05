@@ -9,8 +9,13 @@ const styles = {
     textAlign: 'center',
     width: 200,
     height: 50,
+    color: '#FFF',
+    fontSize: 36
   },
-
+  timeDisplay: {
+    color: '#FFF',
+    fontSize: 36
+  }
 }
 
 export default styles;
