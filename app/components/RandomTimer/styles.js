@@ -16,7 +16,7 @@ const styles = {
     textAlign: 'center'
   },
   timerView: {
-    backgroundColor: commonStyles.colors.backgroundColor,
+    backgroundColor: commonStyles.colors.altBackgroundColor,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -25,6 +25,12 @@ const styles = {
     padding: '5%'
   },
   inputWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    // padding: '20%'
+  },
+  buttonWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
