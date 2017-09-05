@@ -1,5 +1,6 @@
-function prettyPrintTime(millisec) {
-    var seconds = (millisec / 1000).toFixed(0);
+const utils = {
+    msToHMS: function(millisec){
+            var seconds = (millisec / 1000).toFixed(0);
     var minutes = Math.floor(seconds / 60);
     var hours = "";
     if (minutes > 59) {
@@ -15,6 +16,10 @@ function prettyPrintTime(millisec) {
         return hours + ":" + minutes + ":" + seconds;
     }
     return minutes + ":" + seconds;
-  }
 
-export default prettyPrintTime;
+    },
+
+
+}
+
+export default utils;

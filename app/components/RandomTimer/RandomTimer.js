@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Alert} from 'react-native';
 import styles from './styles.js';
 import TimerButton from './../TimerButton/TimerButton.js';
 import TimerInput from './../TimerInput/TimerInput.js';
-import prettyPrintTime from './../../lib/prettyPrintTime.js';
+import utils from './../../lib/utils.js';
 
 export default class RandomTimer extends React.Component {
 	constructor(props) {
@@ -49,11 +49,11 @@ export default class RandomTimer extends React.Component {
 	statusDescription(){
 		var statusDescriptionText;
 		// const minTimeMinutes = String(this.state.minTime / 60000);
-		const minTimeMinutes = prettyPrintTime(this.state.minTime);
+		const minTimeMinutes = utils.msToHMS(this.state.minTime);
 		// const maxTimeMinutes = String(this.state.maxTime / 60000);
-		const maxTimeMinutes = prettyPrintTime(this.state.maxTime);
+		const maxTimeMinutes = utils.msToHMS(this.state.maxTime);
 		// const randomTimeMinutes = String(this.state.randomTime / 60000);
-		const randomTimeMinutes = prettyPrintTime(this.state.randomTime);
+		const randomTimeMinutes = utils.msToHMS(this.state.randomTime);
 		switch(this.state.status){
 			case 'stopped':
 				statusDescriptionText = 'Start a time for between';
