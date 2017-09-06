@@ -122,11 +122,17 @@ export default class RandomTimer extends React.Component {
 		}
 	}
 
+	onPressSecondaryButton (){
+		this.setState({
+			status: 'stopped'
+		});
+	}
+
 	render () {
 		return (
 			<View style={styles.timerView} >
 				<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
-				<View style={styles.inputWrapper}>
+				<View>
 					<MultiSliderInput 
 						onValuesChange = {this.onSliderValuesChange.bind(this)}
 						timerState = {this.state.status}
@@ -139,7 +145,7 @@ export default class RandomTimer extends React.Component {
 					/>
 				</View>
 					<TimerButton
-						onButtonPress={this.onPressPrimaryButton.bind(this)}
+						onButtonPress={this.onPressSecondaryButton.bind(this)}
 						timerState = {this.state.status}
 						isSecondaryButton
 					/>
