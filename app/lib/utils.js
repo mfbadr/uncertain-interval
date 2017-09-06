@@ -16,10 +16,18 @@ const utils = {
         return hours + ":" + minutes + ":" + seconds;
     }
     return minutes + ":" + seconds;
-
     },
+    HMSToMs: function(hms){
+        //currently ununused
+        //'02:20:16' ->
+        var p = hms.split(':');
+        var milliseconds = 0;
+        milliseconds += p[0] * 3600000;
+        milliseconds += p[1] * 60000;
+        milliseconds += p[2] * 1000;
 
-
+        return Int(milliseconds);
+    }
 }
 
 export default utils;

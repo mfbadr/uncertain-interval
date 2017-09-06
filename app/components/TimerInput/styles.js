@@ -11,6 +11,7 @@ const styles = {
     height: 50,
     color: '#FFF',
     fontSize: 36
+    // textAlign: 'right'
   },
   timeDisplay: {
     color: '#FFF',
