@@ -3,17 +3,20 @@ import { View, Text, TextInput, Button, Alert} from 'react-native';
 import styles from './styles.js';
 import TimerButton from './../TimerButton/TimerButton.js';
 import TimerInput from './../TimerInput/TimerInput.js';
+import MultiSliderInput from './../MultiSlider/MultiSlider.js';
 import utils from './../../lib/utils.js';
 
 export default class RandomTimer extends React.Component {
 	constructor(props) {
 		super(props);
+		const defaultMinTime = 60000 * 20;
+		const defaultMaxTime = 60000 * 30;
 		//timer statuses: ['stopped', 'running', 'paused', 'finished']
 		//stopped -> running -> paused -> running -> finished -> stopped
 		//                        ^> stopped
 		this.state = {
-			minTime: 5,
-			maxTime: 10000,
+			minTime: defaultMinTime,
+			maxTime: defaultMaxTime,
 			randomTime: 0,
 			timeLeft: 0,
 			status: 'stopped'
@@ -49,20 +52,22 @@ export default class RandomTimer extends React.Component {
 	statusDescription(){
 		var statusDescriptionText;
 		// const minTimeMinutes = String(this.state.minTime / 60000);
-		const minTimeMinutes = utils.msToHMS(this.state.minTime);
+		const minTimeMinutes = this.state.minTime / (1000 * 60);
 		// const maxTimeMinutes = String(this.state.maxTime / 60000);
-		const maxTimeMinutes = utils.msToHMS(this.state.maxTime);
+		// const maxTimeMinutes = utils.msToHMS(this.state.maxTime);
+		const maxTimeMinutes = this.state.maxTime / (1000 * 60);
 		// const randomTimeMinutes = String(this.state.randomTime / 60000);
 		const randomTimeMinutes = utils.msToHMS(this.state.randomTime);
+		// debugger;
 		switch(this.state.status){
 			case 'stopped':
-				statusDescriptionText = 'Start a time for between';
+				statusDescriptionText = `Start a timer for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
 				break;
 			case 'running':
-				statusDescriptionText = 'Timer running for between ';
+				statusDescriptionText = `Timer running for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
 				break;
 			case 'paused':
-				statusDescriptionText = 'Timer paused between:';
+				statusDescriptionText = `Timer paused for for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
 				break;
 			case 'finished':
 				statusDescriptionText = 'Timer finished! Time elapsed: ' + randomTimeMinutes + '.';
@@ -72,6 +77,18 @@ export default class RandomTimer extends React.Component {
 		}
 
 		return statusDescriptionText;
+	}
+
+
+	onSliderValuesChange(values){
+		// debugger;
+		let minTimeInMS = values[0] * 1000 * 60;
+		let maxTimeInMS = values[1] * 1000 * 60;
+		// console.log(values[1]);
+		this.setState({
+			minTime: minTimeInMS,
+			maxTime: maxTimeInMS,
+		})
 	}
 
 	onPressPrimaryButton(){
@@ -110,15 +127,8 @@ export default class RandomTimer extends React.Component {
 			<View style={styles.timerView} >
 				<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
 				<View style={styles.inputWrapper}>
-					<TimerInput
-						onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: true})}
-						value = {this.state.minTime}
-						timerState = {this.state.status}
-					/>
-					<Text> and </Text>
-					<TimerInput
-						onBlur = {(e)=> this.onTimeChanged({time:e.nativeEvent.text, isMinTime: false})}
-						value = {this.state.maxTime}
+					<MultiSliderInput 
+						onValuesChange = {this.onSliderValuesChange.bind(this)}
 						timerState = {this.state.status}
 					/>
 				</View>
