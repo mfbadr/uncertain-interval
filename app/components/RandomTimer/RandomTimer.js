@@ -60,9 +60,9 @@ export default class RandomTimer extends React.Component {
 		const randomTimeMinutes = utils.msToHMS(this.state.randomTime);
 		// debugger;
 		switch(this.state.status){
-		// 	case 'stopped':
-		// 		statusDescriptionText = `Start a timer for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
-		// 		break;
+			case 'stopped':
+				statusDescriptionText = `Start a timer for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
+				break;
 		// 	case 'running':
 		// 		statusDescriptionText = `Timer running for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
 		// 		break;
