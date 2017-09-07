@@ -16,7 +16,7 @@ export default class RandomTimerApp extends React.Component {
 				<View style={styles.container}>
 					<Text style={styles.headline}>Uncertain Interval</Text>
 					<RandomTimer/>
-					<Text style={styles.footer}>contact info will go here</Text>
+					<Text style={styles.footer}>@mikeybadr</Text>
 
 				</View>
 			</TouchableWithoutFeedback>
