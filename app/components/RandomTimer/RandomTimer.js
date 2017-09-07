@@ -60,21 +60,24 @@ export default class RandomTimer extends React.Component {
 		const randomTimeMinutes = utils.msToHMS(this.state.randomTime);
 		// debugger;
 		switch(this.state.status){
-			case 'stopped':
-				statusDescriptionText = `Start a timer for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
-				break;
-			case 'running':
-				statusDescriptionText = `Timer running for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
-				break;
-			case 'paused':
-				statusDescriptionText = `Timer paused for for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
-				break;
+		// 	case 'stopped':
+		// 		statusDescriptionText = `Start a timer for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
+		// 		break;
+		// 	case 'running':
+		// 		statusDescriptionText = `Timer running for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
+		// 		break;
+		// 	case 'paused':
+		// 		statusDescriptionText = `Timer paused for for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
+		// 		break;
 			case 'finished':
-				statusDescriptionText = 'Timer finished! Time elapsed: ' + randomTimeMinutes + '.';
+				statusDescriptionText = `Times up! Time elapsed: ${randomTimeMinutes}`;
 				break;
 			default:
-				Alert.alert('err', 'err');
+				// Alert.alert('err', 'err');
+				statusDescriptionText = `Timer between ${minTimeMinutes} and ${maxTimeMinutes} minutes is ${this.state.status}.`;
+		// }
 		}
+		// var	statusDescriptionText = `Timer between ${minTimeMinutes} and ${maxTimeMinutes} minutes is ${this.state.status}`;
 
 		return statusDescriptionText;
 	}
@@ -131,9 +134,11 @@ export default class RandomTimer extends React.Component {
 	render () {
 		return (
 			<View style={styles.timerView} >
-				<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
-				<View>
-					<MultiSliderInput 
+				<View style={styles.descriptionWrapper} >
+					<Text style={styles.statusDescription}>{this.statusDescription()}</Text>
+				</View>
+				<View style={styles.sliderWrapper} >
+					<MultiSliderInput
 						onValuesChange = {this.onSliderValuesChange.bind(this)}
 						timerState = {this.state.status}
 					/>
@@ -143,12 +148,12 @@ export default class RandomTimer extends React.Component {
 						timerState = {this.state.status}
 						onButtonPress={this.onPressPrimaryButton.bind(this)}
 					/>
-				</View>
 					<TimerButton
 						onButtonPress={this.onPressSecondaryButton.bind(this)}
 						timerState = {this.state.status}
 						isSecondaryButton
 					/>
+				</View>
 				<Text>{this.state.minTime} - {this.state.maxTime}</Text>
 				<Text>{this.state.timeLeft}</Text>
 			</View>

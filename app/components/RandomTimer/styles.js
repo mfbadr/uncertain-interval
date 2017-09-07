@@ -3,7 +3,8 @@ import commonStyles from './../../config/common_styles.js'
 const styles = {
   statusDescription: {
     color: '#FFF',
-    fontSize: 26,
+    width: '100%',
+    fontSize: 22,
     textAlign: 'center'
   },
   timerView: {
@@ -15,8 +16,17 @@ const styles = {
     width: '100%',
     padding: '5%'
   },
+  descriptionWrapper: {
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-around',
+    // textAlign: 'center'
+    // height: '30%'
+  },
+  sliderWrapper: {},
   inputWrapper: {
-    // flexDirection: 'row',
+    // flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
@@ -24,8 +34,10 @@ const styles = {
     // padding: '20%'
   },
   buttonWrapper: {
+    // flex: 2, 
     flexDirection: 'row',
     justifyContent: 'space-around',
+
     width: '100%',
     // padding: '20%'
   }
