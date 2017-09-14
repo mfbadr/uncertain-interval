@@ -24,9 +24,12 @@ export default class RandomTimer extends React.Component {
 
 		setInterval(() => {
 			if( this.state.status == 'running'){
-				let newTime = this.state.timeLeft -= 1000;
+				let newTimeLeft = this.state.timeLeft -= 1000;
+				// let newTimeLeft = this.state.timeLeft -= 1000;
 				this.setState(previousState => {
-					return { timeLeft: newTime };
+					return {
+						timeLeft: newTimeLeft,
+					};
 				});
 				if(this.state.timeLeft < 0){
 					Alert.alert('Message', 'Time is up!');
@@ -51,33 +54,27 @@ export default class RandomTimer extends React.Component {
 
 	statusDescription(){
 		var statusDescriptionText;
-		// const minTimeMinutes = String(this.state.minTime / 60000);
 		const minTimeMinutes = this.state.minTime / (1000 * 60);
-		// const maxTimeMinutes = String(this.state.maxTime / 60000);
-		// const maxTimeMinutes = utils.msToHMS(this.state.maxTime);
 		const maxTimeMinutes = this.state.maxTime / (1000 * 60);
-		// const randomTimeMinutes = String(this.state.randomTime / 60000);
 		const randomTimeMinutes = utils.msToHMS(this.state.randomTime);
-		// debugger;
+
 		switch(this.state.status){
 			case 'stopped':
 				statusDescriptionText = `Start a timer for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
 				break;
-		// 	case 'running':
-		// 		statusDescriptionText = `Timer running for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
-		// 		break;
-		// 	case 'paused':
-		// 		statusDescriptionText = `Timer paused for for between ${minTimeMinutes} and ${maxTimeMinutes} minutes`;
-		// 		break;
+			case 'paused':
+			case 'running':
+				statusDescriptionText = `Timer between ${minTimeMinutes} and ${maxTimeMinutes} minutes is ${this.state.status}.`;
+				let timeElapsed = utils.msToHMS(this.state.randomTime - this.state.timeLeft);
+				statusDescriptionText += `\n \n Time elasped: ${timeElapsed}`
+				break;
 			case 'finished':
 				statusDescriptionText = `Times up! Time elapsed: ${randomTimeMinutes}`;
 				break;
 			default:
-				// Alert.alert('err', 'err');
 				statusDescriptionText = `Timer between ${minTimeMinutes} and ${maxTimeMinutes} minutes is ${this.state.status}.`;
-		// }
+				break;
 		}
-		// var	statusDescriptionText = `Timer between ${minTimeMinutes} and ${maxTimeMinutes} minutes is ${this.state.status}`;
 
 		return statusDescriptionText;
 	}
