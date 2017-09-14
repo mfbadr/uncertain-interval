@@ -66,7 +66,7 @@ export default class RandomTimer extends React.Component {
 			case 'running':
 				statusDescriptionText = `Timer between ${minTimeMinutes} and ${maxTimeMinutes} minutes is ${this.state.status}.`;
 				let timeElapsed = utils.msToHMS(this.state.randomTime - this.state.timeLeft);
-				statusDescriptionText += `\n \n Time elasped: ${timeElapsed}`
+				statusDescriptionText += `\n \n ${timeElapsed}`
 				break;
 			case 'finished':
 				statusDescriptionText = `Times up! Time elapsed: ${randomTimeMinutes}`;
