@@ -6,11 +6,17 @@ import TimerInput from './../TimerInput/TimerInput.js';
 import MultiSliderInput from './../MultiSlider/MultiSlider.js';
 import utils from './../../lib/utils.js';
 
+import { Audio } from 'expo';
+
+var soundObject = new Audio.Sound();
+
 export default class RandomTimer extends React.Component {
 	constructor(props) {
 		super(props);
 		const defaultMinTime = 60000 * 20;
 		const defaultMaxTime = 60000 * 30;
+		this.playbackInstance = null;
+
 		//timer statuses: ['stopped', 'running', 'paused', 'finished']
 		//stopped -> running -> paused -> running -> finished -> stopped
 		//                        ^> stopped
@@ -32,11 +38,24 @@ export default class RandomTimer extends React.Component {
 					};
 				});
 				if(this.state.timeLeft < 0){
-					Alert.alert('Message', 'Time is up!');
-					this.setState({ status: 'finished'});
+					this.onTimerFinished();
 				}
 			}
 		}, 1000);
+	}
+
+	async componentDidMount(){
+		try {
+		  await soundObject.loadAsync(require('../../assets/small_bell.mp3'));
+		} catch (error) {
+			// console.log(error);
+		}
+	}
+
+	onTimerFinished(){
+		Alert.alert('Message', 'Time is up!');
+		soundObject.playAsync();
+		this.setState({ status: 'finished'});
 	}
 
 	onTimeChanged({time, isMinTime}) {
@@ -49,8 +68,6 @@ export default class RandomTimer extends React.Component {
 			this.setState({maxTime: timeInMs})
 		}
 	}
-
-
 
 	statusDescription(){
 		var statusDescriptionText;
@@ -81,10 +98,8 @@ export default class RandomTimer extends React.Component {
 
 
 	onSliderValuesChange(values){
-		// debugger;
 		let minTimeInMS = values[0] * 1000 * 60;
 		let maxTimeInMS = values[1] * 1000 * 60;
-		// console.log(values[1]);
 		this.setState({
 			minTime: minTimeInMS,
 			maxTime: maxTimeInMS,
@@ -92,6 +107,7 @@ export default class RandomTimer extends React.Component {
 	}
 
 	onPressPrimaryButton(){
+
 		if(!this.state.minTime && !this.state.maxTime){
 			Alert.alert('Error', 'Pick a minumum and maxiumum time');
 			return;
@@ -129,6 +145,7 @@ export default class RandomTimer extends React.Component {
 	}
 
 	render () {
+
 		return (
 			<View style={styles.timerView} >
 				<View style={styles.descriptionWrapper} >
