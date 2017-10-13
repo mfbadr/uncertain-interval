@@ -52,9 +52,9 @@ export default class RandomTimer extends React.Component {
 		}
 	}
 
-	onTimerFinished(){
+	async onTimerFinished(){
+		await soundObject.playAsync();
 		Alert.alert('Message', 'Time is up!');
-		soundObject.playAsync();
 		this.setState({ status: 'finished'});
 	}
 
